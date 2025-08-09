@@ -161,6 +161,7 @@ Bool Display::setDisplayMode( UnsignedInt xres, UnsignedInt yres, UnsignedInt bi
 	TheTacticalView->setHeight((Real)oldViewHeight/(Real)oldDisplayHeight*(Real)yres);
 	TheTacticalView->setOrigin((Real)oldViewOriginX/(Real)oldDisplayWidth*(Real)xres,
 	(Real)oldViewOriginY/(Real)oldDisplayHeight*(Real)yres);
+	TheTacticalView->updateCameraHeights(xres, yres);
 	return TRUE;
 }
 

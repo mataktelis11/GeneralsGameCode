@@ -1199,6 +1199,7 @@ void InGameUI::init( void )
 		// make the tactical display the full screen width and height
 		TheTacticalView->setWidth( TheDisplay->getWidth() );
 		TheTacticalView->setHeight( TheDisplay->getHeight() );
+		TheTacticalView->updateCameraHeights(TheDisplay->getWidth(), TheDisplay->getHeight());
 	}
 	TheTacticalView->setDefaultView(0.0f, 0.0f, 1.0f);
 

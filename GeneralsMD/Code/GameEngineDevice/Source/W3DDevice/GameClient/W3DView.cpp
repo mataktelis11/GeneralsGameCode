@@ -227,6 +227,38 @@ void W3DView::setWidth(Int width)
 	m_3DCamera->Set_View_Plane((Real)width/(Real)TheDisplay->getWidth()*DEG_TO_RADF(50.0f),-1);
 }
 
+void W3DView::updateCameraHeights(const Int width, const Int height)
+{
+	float aspect = static_cast<Real>(width) / static_cast<Real>(height);
+
+	const float aspect_4_3 = 4.0f / 3.0f;
+	const float aspect_16_9 = 16.0f / 9.0f;
+
+	float maxCameraHeight = TheGlobalData->m_maxCameraHeight;
+	float minCameraHeight = TheGlobalData->m_minCameraHeight;
+	float cameraheight = TheGlobalData->m_cameraHeight;
+
+	if (aspect > aspect_4_3 && width >= 640 && height >= 480)
+	{
+		if (aspect > aspect_16_9)
+		{
+			aspect = aspect_16_9;
+		}
+
+		const float multi = aspect - aspect_4_3 + 1.0f;
+		const float nerf = 1.0f - (aspect - aspect_4_3) / 12.0f;
+		const float scaleFactor = multi * nerf;
+
+		maxCameraHeight *= scaleFactor;
+		minCameraHeight *= scaleFactor;
+		cameraheight *= scaleFactor;
+	}
+
+	TheWritableGlobalData->m_maxCameraHeight = maxCameraHeight;
+	TheWritableGlobalData->m_minCameraHeight = minCameraHeight;
+	TheWritableGlobalData->m_cameraHeight = cameraheight;
+}
+
 //-------------------------------------------------------------------------------------------------
 /** Sets location of top-left view corner on display */
 //-------------------------------------------------------------------------------------------------
